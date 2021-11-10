@@ -2,15 +2,15 @@
 
 const { Sequelize, DataTypes } = require("sequelize");
 
-const clothesModel = require("./clothes/model");
-const foodModel = require("./food/model");
+const countryModel = require("./country/model");
+const experienceModel = require("./experience/model");
 const userModel = require("./users");
 const Collection = require("./data-collection");
 
 const DATABASE_URL =
   process.env.NODE_ENV === "test"
     ? "sqlite:memory:"
-    : process.env.DATABASE_URL || "postgres://localhost:5432/smallProject";
+    : process.env.DATABASE_URL || "postgres://localhost:5432/smallproject";
 const DATABASE_CONFIG =
   process.env.NODE_ENV === "production"
     ? {
@@ -25,12 +25,12 @@ const DATABASE_CONFIG =
 
 const sequelize = new Sequelize(DATABASE_URL, DATABASE_CONFIG);
 
-const food = foodModel(sequelize, DataTypes);
-const clothes = clothesModel(sequelize, DataTypes);
+const experience = experienceModel(sequelize, DataTypes);
+const country = countryModel(sequelize, DataTypes);
 
 module.exports = {
   db: sequelize,
-  food: new Collection(food),
-  clothes: new Collection(clothes),
+  experience: new Collection(experience),
+  country: new Collection(country),
   users: userModel(sequelize, DataTypes),
 };

@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raneemabujamous/auth-api.git"
+    "url": "git+https://github.com/SanaIshaqat/small-project.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/raneemabujamous/auth-api/issues"
+    "url": "https://github.com/SanaIshaqat/small-project/issues"
   },
-  "homepage": "https://github.com/raneemabujamous/auth-api#readme",
+  "homepage": "https://github.com/SanaIshaqat/small-project#readme",
   "dependencies": {
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",

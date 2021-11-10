@@ -33,11 +33,16 @@ https://github.com/raneemabujamous/bearer-auth/pulls
 
 ## .env
 
-### PORT - Your Port Number
+- PORT - Your Port Number
+- DATABASE_URL=postgres://localhost:5432/yourDataBaseName
+- SECRET= AnySecretWordYouChoose
 
-### DATABASE_URL=postgres://localhost:5432/yourDataBaseName
+## Tests
 
-### SECRET= AnySecretWordYouChoose
+![](lab10.PNG)
+![](lab10.PNG)
+![](lab10.PNG)
+
 
 
 

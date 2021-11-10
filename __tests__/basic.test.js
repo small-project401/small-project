@@ -1,17 +1,13 @@
-'use strict';
+"use strict";
 
-
-const middleware = require('../src/middleware/basic');
-const Users = require('../src/models/users');
+const middleware = require("../src/middleware/basic");
+const Users = require("../src/models/users");
 
 let users = {
-  admin: { username: 'admin', password: 'password' },
+  admin: { username: "admin", password: "password" },
 };
 
-
-
-describe('Auth Middleware', () => {
-
+describe("Auth Middleware", () => {
   // admin:password: YWRtaW46cGFzc3dvcmQ=
   // admin:foo: YWRtaW46Zm9v
 
@@ -23,37 +19,28 @@ describe('Auth Middleware', () => {
   };
   const next = jest.fn();
 
-  describe('user authentication', () => {
-
-    it('fails a login for a user (admin) with the incorrect basic credentials', () => {
-
+  describe("user authentication", () => {
+    it("fails a login for a user (admin) with the incorrect basic credentials", () => {
       // Change the request to match this test case
       req.headers = {
-        authorization: 'Basic YWRtaW46Zm9v',
+        authorization: "Basic YWRtaW46Zm9v",
       };
 
-      return middleware(req, res, next)
-        .then(() => {
-          expect(next).not.toHaveBeenCalled();
-          expect(res.status).toHaveBeenCalledWith(403);
-        });
-
+      return middleware(req, res, next).then(() => {
+        expect(next).not.toHaveBeenCalled();
+        expect(res.status).toHaveBeenCalledWith(403);
+      });
     }); // it()
 
-    xit('logs in an admin user with the right credentials', () => {
-
+    it("logs in an admin user with the right credentials", () => {
       // Change the request to match this test case
       req.headers = {
-        authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
+        authorization: "Basic YWRtaW46cGFzc3dvcmQ=",
       };
 
-      return middleware(req, res, next)
-        .then(() => {
-          expect(next).not.toHaveBeenCalledWith();
-        });
-
+      return middleware(req, res, next).then(() => {
+        expect(next).not.toHaveBeenCalledWith();
+      });
     });
-
   });
-
 });

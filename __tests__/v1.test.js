@@ -30,7 +30,7 @@ describe('V1 Routes', () => {
     });
   });
 
-  xit('can get a experience item', async() => {
+  it('can get a experience item', async() => {
     let obj ={ touristName: 'test_experience_2', favFood: "test", favLandmark: 'test',thoughts:"test" };
     let expected = { touristName: 'test_experience_2', favFood: "test", favLandmark: 'test',thoughts:"test" };
 
@@ -44,7 +44,7 @@ describe('V1 Routes', () => {
     });
   });
 
-  xit('can get all experience items', async() => {
+  it('can get all experience items', async() => {
     let obj = { touristName: 'test_experience_3', favFood: "test", favLandmark: 'test',thoughts:"test" };
     let obj2 = { touristName: 'test_experience_4', favFood: "test", favLandmark: 'test',thoughts:"test" };
 

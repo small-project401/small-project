@@ -39,9 +39,13 @@ https://github.com/raneemabujamous/bearer-auth/pulls
 
 ## Tests
 
-![](lab10.PNG)
-![](lab10.PNG)
-![](lab10.PNG)
+![](auth.test.all.passed.PNG)
+
+![](basic.test.allPassed.PNG)
+
+![](v1.test.allPassed.PNG)
+
+![](v2.test.allPassed.PNG)
 
 
 

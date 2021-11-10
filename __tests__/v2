@@ -1,0 +1,87 @@
+'use strict';
+
+process.env.SECRET = "testingAuth";
+const supertest = require('supertest');
+const server = require('../src/server').server;
+const { db } = require('../src/models/index');
+const mockRequest = supertest(server);
+let users = {
+    admin: { username: 'admin2', password: 'password2', role: 'admin' },
+    editor: { username: 'editor2', password: 'password2', role: 'editor' },
+    writer: { username: 'writer2', password: 'password2', role: 'writer' },
+    user: { username: 'user2', password: 'password2', role: 'user' },
+};
+const model = 'country';
+
+beforeAll(async () => {
+    await db.sync();
+});
+afterAll(async () => {
+    await db.drop();
+});
+
+describe('V2 Route Testing', () => {
+    Object.keys(users).forEach(userType => {
+        describe(`${userType} users`, () => {
+            it('can create new records', async () => {
+                const signRes = await mockRequest.post('/signup').send(users[userType]);
+                const token = signRes.body.token;
+                const response = await mockRequest.post(`/api/v2/${model}`).send({
+                    "countryName": "Italy",
+                    "cityName": "Rome",
+                    "language": "Italian"
+                }).set('Authorization', `Bearer ${token}`);
+                if (userType === 'user') {
+                    expect(response.status).not.toBe(200);
+                } else {
+                    expect(response.status).toBe(201);
+                }
+            });
+
+            it('can update with put', async () => {
+                const signRes = await mockRequest.post('/signin').auth(users[userType].username, users[userType].password);
+                const token = signRes.body.token;
+                const response = await mockRequest.put(`/api/v2/${model}/1`).send({
+                    "countryName": "Italy",
+                    "cityName": "Rome",
+                    "language": "Italian"
+                }).set('Authorization', `Bearer ${token}`);
+                if (users[userType].role === 'user' || users[userType].role === 'writer') {
+                    expect(response.status).not.toBe(200);
+                } else {
+                    expect(response.status).toBe(200);
+                }
+            });
+
+            it('can get all records', async () => {
+                const signRes = await mockRequest.post('/signin').auth('admin2', 'password2');
+                const token = signRes.body.token;
+                await mockRequest.post(`/api/v2/${model}`).send({
+                    "countryName": "Italy",
+                    "cityName": "Rome",
+                    "language": "Italian"
+                }).set('Authorization', `Bearer admin`);
+                const response = await mockRequest.get(`/api/v2/${model}`).set('Authorization', `Bearer ${token}`);
+                expect(response.status).toBe(200);
+            });
+
+            it('can get a single record by id', async () => {
+                const signRes = await mockRequest.post('/signin').auth('admin2', 'password2');
+                const token = signRes.body.token;
+                const response = await mockRequest.get(`/api/v2/${model}/1`).set('Authorization', `Bearer ${token}`);
+                expect(response.status).toBe(200);
+            });
+            
+            if ('can delete a record -- admin only', async () => {
+                const signRes = await mockRequest.post('/signin').auth(users[userType].username, users[userType].password);
+                const token = signRes.body.token;
+                const response = await mockRequest.put(`/api/v2/${model}/2`).set('Authorization', `Bearer ${token}`);
+                if (users[userType].role === 'admin') {
+                    expect(response.status).toBe(200);
+                } else {
+                    expect(response.status).not.toBe(200);
+                }
+            });
+        });
+    });
+});

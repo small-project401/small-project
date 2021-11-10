@@ -1,40 +1,50 @@
+"use strict";
+// 3rd party resoursec
 const express = require("express");
 const cors = require("cors");
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 const morgan = require("morgan");
+require("dotenv").config();
+// Esoteric resoursec
+const notFoundHandler = require("./error-handlers/404");
+const errorHandler = require("./error-handlers/500");
+const logger = require("./middleware/logger");
+const authroutes = require("./routes/routes");
+const port = process.env.PORT || 3030;
+
+const v1Routes = require("./routes/v1");
+const v2Routes = require("./routes/v2");
+const { use } = require("../src/routes/routes");
+
+//prepare express app
+const app = express();
+
+// app level middleware
 app.use(cors());
 app.use(morgan("dev"));
-const port = process.env.PORT || 3031;
-/////////////////////////////////
-const errorHandler = require("./error-handlers/500.js");
-const notFound = require("./error-handlers/404.js");
-const logger = require("./middleware/logger");
-// const v1Routes = require("./auth/routes/v1");
-// const v2Routes = require("./auth/routes/v2");
-// const authRoutes = require("./auth/routes/routes");
-///////////////////////////////////////\
-app.get("/", (req, res) => {
-  res.status(200).send("Hello world 🤪");
-});
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-//////////////////////////////////
-// app.use(authRoutes);
-////////////////////////
+app.get("/", proofOfLife);
+function proofOfLife(req, res) {
+  res.status(200).json("SERVER IS ALIVE!");
+}
+
+//routes
 app.use(logger);
-app.use(notFound);
-// app.use("/api/v1", v1Routes);
-// app.use("/api/v1", v2Routes);
-app.use("*", notFound);
+app.use(authroutes);
+app.use("/api/v1", v1Routes);
+app.use("/api/v2", v2Routes);
+
+//catchalls
+app.use("*", notFoundHandler);
 app.use(errorHandler);
 
-function start() {
-  app.listen(port, () => {
-    console.log(`app listen to port ${port}`);
-  });
-}
 module.exports = {
   server: app,
-  start: start,
+  start: (port) => {
+    if (!port) {
+      throw new Error("Missing Port");
+    }
+    app.listen(port, () => console.log(`Listening on ${port}`));
+  },
 };

@@ -1,5 +1,4 @@
 # small-project
-# small-project
 
 ### project members
 

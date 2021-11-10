@@ -7,13 +7,6 @@
 3-**mahmoud hamdan**</br>
 4-**mu'nes**</br>
 
-## .env
-
-### PORT - [3030]
-
-### DATABASE_URL=postgres://localhost:5432/smallproject
-
-### SECRET=SecretWord
 
 ## Heroku:
 
@@ -35,4 +28,16 @@ https://github.com/raneemabujamous/bearer-auth/actions
 
 https://github.com/raneemabujamous/bearer-auth/pulls
 
+
 ![](lab10.PNG)
+
+## .env
+
+### PORT - Your Port Number
+
+### DATABASE_URL=postgres://localhost:5432/yourDataBaseName
+
+### SECRET= AnySecretWordYouChoose
+
+
+

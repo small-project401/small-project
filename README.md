@@ -22,11 +22,11 @@ https://small-project-401.herokuapp.com/api/v1/country
 
 ## Github Actions:
 
-https://github.com/raneemabujamous/bearer-auth/actions
+https://github.com/small-project401/small-project/actions
 
 ## pull request :
 
-https://github.com/raneemabujamous/bearer-auth/pulls
+https://github.com/small-project401/small-project/pull/8
 
 
 ![](lab10.PNG)
@@ -55,6 +55,30 @@ https://github.com/raneemabujamous/bearer-auth/pulls
 
 ![](v2.test.allPassed.PNG)
 
+### Users Model
+{
+    "username":"sana",
+    "password":"sana",
+    "role":"admin"
+}
 
 
+### Country Model
+
+ {
+     "countryName": "Italy",
+    "cityName":"Rome",
+    "language":"Italian"
+     
+ }
+
+ ### Experience Model 
+{
+
+"touristName": "sana",
+    "favFood": "pizza",
+    "favLandmark": "colosseum",
+    "thoughts": "Had wonderful time walking down the streets and alley of rome, seeing all kinds of ancient history landmark in each corner, loved the people and the food, avoid visiting during holidays to avoid crowds of tourists"
+
+}
 
